@@ -55,3 +55,21 @@ ORDER BY
       gender
     ORDER BY
       date ASC
+
+-- new_york_bikes_by_day_bike_id
+
+      SELECT
+        CAST(starttime AS date) AS date,
+        bikeid,
+        COUNT(*) AS num_trips,
+        COUNT(DISTINCT bikeid) AS num_distinct_bikes,
+        ROUND(SUM(tripduration/60),2) AS total_trip_dration
+      FROM
+        `bigquery-public-data.new_york_citibike.citibike_trips`
+      WHERE
+        CAST(starttime AS date) IS NOT NULL
+      GROUP BY
+        date,
+        bikeid
+      ORDER BY
+        date ASC
